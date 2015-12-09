@@ -1,0 +1,37 @@
+<p id="notice"><%= notice %></p>
+<%= csrf_meta_tags %>
+
+
+<h3><%= link_to @user.name, @user %>'s List: <%= @list.title %></h3>
+<div><%= @list.description %></div>
+<div><i>created <%= time_ago_in_words @list.created_at %> ago</i></div>
+
+<div id="tasks">
+  <div class="ui divided list">
+    <% @list.items.each do |item| %>
+      <div class="item">
+        <div class="content">
+          <%= item.description %>
+
+          <div class="ui right floated mini basic buttons">
+            <%= link_to edit_user_list_item_path(@list.user, @list, item), class: "ui red labeled icon button" do %>
+              <i class="edit icon"></i>
+              Edit
+            <% end %>
+            <%= link_to user_list_item_path(@list.user, @list, item), method: :delete, class: "ui red labeled icon button" do %>
+              <i class="remove icon"></i>
+              Delete
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <div id="form">
+    <%= render "items/form" %>
+  </div>
+</div>
+
+<%= link_to 'Edit', edit_user_list_path(current_user, @list) %> |
+<%= link_to 'Delete', user_list_path(@list.user, @list), method: :delete, data: { confirm: 'Are you sure?' } %> |
+<%= link_to 'Back', user_lists_path %>

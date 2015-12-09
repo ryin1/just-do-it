@@ -1,0 +1,22 @@
+<p id="notice"><%= notice %></p>
+
+<h3><%= @user.name %>'s Profile</h3>
+
+<p>
+  <strong>Email:</strong>
+  <%= @user.email %>
+</p>
+
+
+<% @user.lists.each do |list| %>
+  <h3><%= link_to list.title, user_list_path(@user, list) %></h3>
+  <%= list.description %>
+<% end %>
+<% if @user.lists.empty? %>
+  <h3><%= @user.name %> has no lists yet!</h3>
+<% end %>
+</br>
+<% if @user == current_user %>
+  <%= link_to 'Edit', edit_user_path(@user) %> |
+  <%= link_to 'Back', users_path %>
+<% end %>

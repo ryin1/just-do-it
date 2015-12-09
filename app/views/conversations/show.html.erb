@@ -1,0 +1,20 @@
+<h3>Conversation: <%= @conversation.subject %></h3>
+
+<div class="panel panel-default">
+
+  <div class="panel-body">
+    <div class="ui message">
+      <% @conversation.receipts_for(current_user).each do |receipt| %>
+        <% message = receipt.message %>
+        <%= link_to message.sender.name, message.sender %>: <%= message.body %>
+        <div id="time"><%= time_ago_in_words(message.created_at) %> ago</div>
+      <% end %>
+    </div>
+  </div>
+  <%= form_tag reply_conversation_path(@conversation), method: :post do %>
+  <div class="ui form">
+    <%= text_area_tag 'body', nil, cols: 3, class: 'ui action input', placeholder: 'Type something...', required: true %>
+  </div>
+  <%= submit_tag "Send Message", class: 'submit ui blue button' %>
+<% end %>
+</div>

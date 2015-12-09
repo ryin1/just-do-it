@@ -13,3 +13,10 @@
  *= require_tree .
  *= require_self
  */
+
+
+.time {
+  font: gray;
+  font-style: italic;
+}
+

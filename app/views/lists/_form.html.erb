@@ -1,0 +1,26 @@
+<%= form_for([current_user, @list], :html => {class: "ui form"}) do |f| %>
+  <% if @list.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@list.errors.count, "error") %> prohibited this list from being saved:</h2>
+
+      <ul>
+      <% @list.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :title %>
+    <%= f.text_field :title %>
+  </div>
+  <div class="field">
+    <%= f.label :description %>
+    <%= f.text_field :description %>
+  </div>
+  <div>
+    <%= f.submit class: "submit ui blue button" %>
+  </div>
+<% end %>
+</br>

@@ -1,0 +1,16 @@
+<div class="item">
+  <div class="content">
+
+    <%= item.description %>
+    <% if @list.user == current_user %>
+    <form action="<%=edit_user_list_item_path(@list.user, @list.id, item.id)%>" method="get">
+      <button type="submit" class="ui blue labeled icon button">
+        <i class="edit icon"></i>
+        Edit
+      </button>
+    </form>
+      <%= link_to 'Edit', edit_user_list_item_path(@list.user, @list.id, item.id) %>
+      <%= link_to 'Delete', user_list_item_path(@list.user, @list, item.id), method: :delete, data: { confirm: 'Are you sure?' } %>
+    <% end %>
+  </div>
+</div>  

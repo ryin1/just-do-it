@@ -1,0 +1,19 @@
+<% unless @item.nil? || @item.errors.empty? %>
+  <div class="ui visible error message">
+    <div class="header">Submission Error</div>
+    <ul class="list">
+      <% @item.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+<div class="ui">
+<%= form_for([current_user, @list, @list.items.build]) do |f| %>
+  <div class="ui left icon action input">
+  <i class="add icon"></i>
+  <%= f.text_field :description, placeholder: "Description" %>
+  <%= f.submit 'Submit', class: "submit ui blue button" %>
+  </div>
+<% end %>
+</div>

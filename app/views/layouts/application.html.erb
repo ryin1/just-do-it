@@ -1,14 +1,98 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-<head>
-  <title>Todos</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
+  <head>
 
-<%= yield %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>
+      <% if defined? @title %>
+        <%= @title %> | Todos
+      <% else %>
+        Todos
+      <% end %>
+    </title>
+    <link rel="stylesheet" type="text/css" href="/assets/css/semantic.min.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/style.css" />
+    <script src="/assets/js/jquery-1.11.3.min.js"></script>
+    <script src="/assets/js/semantic.min.js"></script>
+  </head>
 
-</body>
+  <body>
+    <div class="ui grid container">
+      <div class="three wide column right aligned">
+        <a href="/">
+          <img src="/assets/images/todo_logo.png" width="120" />
+        </a>
+      </div>
+      <div class="ui middle aligned thirteen wide column">
+        <h1 class="ui header content">
+          Todos
+          <div class="sub header">
+            One step ahead of your schedule.
+          </div>
+          </br>
+        </h1>
+      </div>
+
+
+      <div class="three wide column">
+        <nav id="navMenu" class="ui vertical pointing fluid secondary menu right">
+          <div class="sub header">
+            <% if logged_in? %>
+              Hi <%= link_to current_user.name, current_user %>!
+              <%= link_to 'Log out', '/logout', :method => :delete %> |
+              <%= link_to 'Inbox', conversations_path %>
+
+            <!-- Add log out link otherwise -->
+            <% else %>
+              <%= link_to 'Log in', '/login', :method => :get %> |
+              <%= link_to 'Sign up', '/users/new', :method => :get %>
+            <% end %>
+          </div>
+          <% if @lists && logged_in? %>
+            <div><strong>Your Lists</strong></div>
+            <% @lists.each do |list| %>
+              <a class="item<%= ' active' if list.id == @list.try(:id) %>" href="/users/<%= current_user.id %>/lists/<%= list.id %>">
+                <%= list.title %>
+                <i class="chevron right icon"></i>
+              </a>
+            <% end %>
+            <a class="item<%= ' active' if request.path_info == '/lists/new' %>" href="/users/<%= current_user.id %>/lists/new"> 
+              Add List
+              <i class="add icon"></i>
+            </a>
+          <% end %>
+        </nav>
+      </div>
+
+      <div class="ten wide column">
+        <div id="content">
+          <div class="ui segment">
+            <%= yield %>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="ui visible inverted right vertical sidebar menu">
+      <h3 class="container"><font color="white">Users</font></h3>
+      <% @users.each do |user| %>
+        <%= link_to user, class: "item" do %>
+          <% tasks = user.lists.map {|x| x.items.length }.reduce :+ || 0 %>
+          <% tasks = 0 if tasks.nil? %>
+          <% if tasks < 3 %>
+            <i class="smile icon"></i>
+          <% elsif tasks < 8 %>
+            <i class="meh icon"></i>
+          <% else %>
+            <i class="frown icon"></i>
+          <% end %>
+          <%= user.name %> (<%= tasks %>)
+        <% end %>
+      <% end %>
+    </div>
+  </body>
 </html>
