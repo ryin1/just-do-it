@@ -6,10 +6,7 @@ class ApplicationController < ActionController::Base
 
   def set_lists_and_users
     @users = User.all
-    
-    if logged_in?
-      @lists = current_user.lists
-    end
+    @lists = current_user.lists if logged_in?
   end
 
   # Helper methods: Logged in, current user
@@ -19,7 +16,6 @@ class ApplicationController < ActionController::Base
   end
 
   helper_method def current_user
-    # @user ||= User.find(session[:user_id]) if logged_in?
     User.find(session[:user_id]) if logged_in?
   end
 end
