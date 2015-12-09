@@ -89,7 +89,12 @@
           <% else %>
             <i class="frown icon"></i>
           <% end %>
-          <%= user.name %> (<%= tasks %> tasks)
+          <%= user.name %> (<%= tasks %>
+          <%= if task == 1 %>
+            task)
+          <% else %>
+            tasks)
+          <% end %>
         <% end %>
       <% end %>
     </div>
