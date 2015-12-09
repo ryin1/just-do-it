@@ -9,7 +9,7 @@
   </div>
 <% end %>
 <div class="ui">
-<%= form_for([@list.user, @list, @list.items.build]) do |f| %>
+<%= form_for([current_user, @list, @list.items.build]) do |f| %>
   <div class="ui left icon action input">
   <i class="add icon"></i>
   <%= f.text_field :description, placeholder: "Description" %>

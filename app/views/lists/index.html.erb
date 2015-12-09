@@ -23,7 +23,7 @@ td
       <tr>
         <td><%= link_to list.title, [list.user, list] %></td>
         <td><%= list.description %></td>
-        <% if @list.user == current_user %>
+        <% if list.user == current_user %>
           <td><%= link_to 'Edit', edit_user_list_path(list.user, list) %></td>
           <td><%= link_to 'Delete', [list.user, list], method: :delete, data: { confirm: 'Are you sure?' } %></td>
         <% end %>
