@@ -4,10 +4,12 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_action :set_lists_and_users
 
-  # def set_lists_and_users
-  #   @users = User.all
-  #   @lists = current_user.lists if logged_in?
-  # end
+  def set_lists_and_users
+    @users = User.all
+    if logged_in?
+      @lists = current_user.lists
+    end
+  end
 
   # Helper methods: Logged in, current user
 
@@ -16,6 +18,8 @@ class ApplicationController < ActionController::Base
   end
 
   helper_method def current_user
-    User.find(session[:user_id]) if logged_in?
+    if logged_in?
+      User.find(session[:user_id])
+    end
   end
 end
