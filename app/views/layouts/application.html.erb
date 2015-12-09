@@ -41,10 +41,9 @@
         <nav id="navMenu" class="ui vertical pointing fluid secondary menu right">
           <div class="sub header">
             <% if logged_in? %>
-              Hi <%= link_to current_user.name, current_user %>!
+              <h3>Hi <%= link_to current_user.name, current_user %>!</h3>
               <%= link_to 'Log out', '/logout', :method => :delete %> |
               <%= link_to 'Inbox', conversations_path %>
-
             <!-- Add log out link otherwise -->
             <% else %>
               <%= link_to 'Log in', '/login', :method => :get %> |
@@ -52,7 +51,7 @@
             <% end %>
           </div>
           <% if @lists && logged_in? %>
-            <div><strong>Your Lists</strong></div>
+            <h3>Your Lists</h3>
             <% @lists.each do |list| %>
               <a class="item<%= ' active' if list.id == @list.try(:id) %>" href="/users/<%= current_user.id %>/lists/<%= list.id %>">
                 <%= list.title %>
@@ -90,7 +89,7 @@
           <% else %>
             <i class="frown icon"></i>
           <% end %>
-          <%= user.name %> (<%= tasks %>)
+          <%= user.name %> (<%= tasks %> tasks)
         <% end %>
       <% end %>
     </div>
