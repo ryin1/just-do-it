@@ -1,4 +1,4 @@
-<%= form_for([current_user, @list], :html => {class: "ui form"}) do |f| %>
+<%= form_for([@list.user, @list], :html => {class: "ui form"}) do |f| %>
   <% if @list.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@list.errors.count, "error") %> prohibited this list from being saved:</h2>

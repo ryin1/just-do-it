@@ -12,7 +12,7 @@
       <div class="item">
         <div class="content">
           <%= item.description %>
-
+          <% if current_user == @user %>
           <div class="ui right floated mini basic buttons">
             <%= link_to edit_user_list_item_path(@list.user, @list, item), class: "ui red labeled icon button" do %>
               <i class="edit icon"></i>
@@ -23,15 +23,19 @@
               Delete
             <% end %>
           </div>
+          <% end %>
         </div>
       </div>
     <% end %>
   </div>
+  <% if current_user == @user %>
   <div id="form">
     <%= render "items/form" %>
   </div>
+  <% end %>
 </div>
-
-<%= link_to 'Edit', edit_user_list_path(current_user, @list) %> |
-<%= link_to 'Delete', user_list_path(@list.user, @list), method: :delete, data: { confirm: 'Are you sure?' } %> |
-<%= link_to 'Back', user_lists_path %>
+<% if current_user == @user %>
+  <%= link_to 'Edit', edit_user_list_path(@list.user, @list) %> |
+  <%= link_to 'Delete', user_list_path(@list.user, @list), method: :delete, data: { confirm: 'Are you sure?' } %> |
+<% end %>
+  <%= link_to 'Back', user_lists_path %>

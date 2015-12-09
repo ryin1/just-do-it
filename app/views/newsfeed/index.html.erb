@@ -1,18 +1,13 @@
 <div><h1>News Feed</h1></div>
 </br>
-<% if !logged_in? %>
-  Please log in to view news feed.
-<% else %>
-  <% if !@feed_items.empty? %>
-    <% @feed_items.each do |item| %>
-    <!-- <a class="item<%= ' active' if item.id == @item.try(:id) %>" href="/"> -->
-      <div style='margin-bottom: 10px'>
-        <%= link_to item.list.user.name, item.list.user %> added <u><%= item.description %></u> to <%= link_to item.list.title, user_list_path(item.list.user, item.list) %>
-        <i class='time'><%= time_ago_in_words(item.created_at) %> ago</i>
-      </div>
-    <!-- </a> -->
-    <% end %>
-  <% else %>
-    Your feed is empty. Get back to work.
+<% if !@feed_items.empty? %>
+  <% @feed_items.each do |item| %>
+    <div style='margin-bottom: 10px'>
+      <%= link_to item.list.user.name, item.list.user %> added <u><%= item.description %></u> to <%= link_to item.list.title, user_list_path(item.list.user, item.list) %>
+      <i class='time'><%= time_ago_in_words(item.created_at) %> ago</i>
+    </div>
+  <!-- </a> -->
   <% end %>
+<% else %>
+  Your feed is empty. Get back to work.
 <% end %>
